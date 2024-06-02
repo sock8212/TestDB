@@ -111,17 +111,18 @@ with open('teachers_with_pk.csv', 'r') as file:
 
 c.execute("""
 SELECT COURSE_NAME, STUDENT_ID, TEACHER_ID FROM Courses 
-JOIN Enrollments ON Enrollments.COURSE_ID = STUDENT_ID2
-JOIN Students ON Students.STUDENT_ID2 = Enrollments.STUDENT_ID
+JOIN Enrollments ON Enrollments.COURSE_ID = Courses.COURSE_ID
+JOIN Students ON Students.STUDENT_ID2 = STUDENT_ID
+WHERE Students.FIRST_NAME = 'Christopher' AND Students.LAST_NAME = 'Estrada'
 """)
 print(c.fetchall())
-c.execute("""
-SELECT ID2, NAME FROM Courses 
-JOIN Enrollments ON Courses.ID2 = COURSE_ID
-JOIN Students ON Enrollments.STUDENT_ID = ID
-WHERE Students.FIRST_NAME = 'Rosalia' AND Students.LAST_NAME = 'Arondel'
-""")
-print(c.fetchall())
+#c.execute("""
+#SELECT ID2, NAME FROM Courses
+#JOIN Enrollments ON Courses.ID2 = COURSE_ID
+#JOIN Students ON Enrollments.STUDENT_ID = ID
+#WHERE Students.FIRST_NAME = 'Rosalia' AND Students.LAST_NAME = 'Arondel'
+#""")
+#print(c.fetchall())
 # This commits all the changes to the database.
 connect.commit()
 

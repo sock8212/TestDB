@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d81cc430-3294-418c-ac45-1dfd3cee5f31" name="Changes" comment="initial">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.venv/Scripts/Database.db" beforeDir="false" afterPath="$PROJECT_DIR$/.venv/Scripts/Database.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.venv/Scripts/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/.venv/Scripts/main.py" afterDir="false" />
     </list>
