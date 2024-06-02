@@ -69,7 +69,6 @@ CREATE TABLE Teachers (
 );
 """)
 
-#test
 
 with open('classrooms_with_pk.csv', 'r') as file:
     reader = csv.reader(file)
@@ -104,6 +103,9 @@ with open('teachers_with_pk.csv', 'r') as file:
 #initial: courses with room and teacher based on student name
 #initial: list of students based on teacher name
 #intiial: hardcode first, then add interface. do documentation during periods
+#later: change data types to more appropriate types when hardcoded checks are done
+#later: add interface
+#later: add diagram explaining dev process
 
 c.execute("""
 SELECT FIRST_NAME, LAST_NAME FROM Students 
