@@ -110,7 +110,7 @@ with open('teachers_with_pk.csv', 'r') as file:
 #WHERE Courses.NAME = 'Maths'
 
 c.execute("""
-SELECT COURSE_NAME, STUDENT_ID, TEACHER_ID FROM Courses 
+SELECT COURSE_NAME, STUDENT_ID, TEACHER_ID, CLASSROOM_ID FROM Courses 
 JOIN Enrollments ON Enrollments.COURSE_ID = Courses.COURSE_ID
 JOIN Students ON Students.STUDENT_ID2 = STUDENT_ID
 WHERE Students.FIRST_NAME = 'Michael' AND Students.LAST_NAME = 'Hill'
