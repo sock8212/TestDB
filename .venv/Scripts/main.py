@@ -62,8 +62,8 @@ CREATE TABLE Students (
 c.execute("""
 CREATE TABLE Teachers (
     TEACHER_ID BLOB NOT NULL PRIMARY KEY,
-    FIRST_NAME BLOB NOT NULL,
-    LAST_NAME BLOB NOT NULL,
+    FIRST_NAME2 BLOB NOT NULL,
+    LAST_NAME2 BLOB NOT NULL,
     DEPARTMENT BLOB NOT NULL,
     EMAIL BLOB NOT NULL
 );
@@ -98,7 +98,7 @@ with open('teachers_with_pk.csv', 'r') as file:
     reader = csv.reader(file)
     # For each row in the document it will add the row to the table list
     for row in reader:
-        c.execute("INSERT INTO Teachers (TEACHER_ID, FIRST_NAME, LAST_NAME, DEPARTMENT, EMAIL) VALUES (?, ?, ?, ?, ?);", (row[0], row[1], row[2], row[3], row[4]))
+        c.execute("INSERT INTO Teachers (TEACHER_ID, FIRST_NAME2, LAST_NAME2, DEPARTMENT, EMAIL) VALUES (?, ?, ?, ?, ?);", (row[0], row[1], row[2], row[3], row[4]))
 
 #initial: courses with room and teacher based on student name
 #initial: list of students based on teacher name
@@ -114,6 +114,14 @@ SELECT COURSE_NAME, STUDENT_ID, TEACHER_ID, CLASSROOM_ID FROM Courses
 JOIN Enrollments ON Enrollments.COURSE_ID = Courses.COURSE_ID
 JOIN Students ON Students.STUDENT_ID2 = STUDENT_ID
 WHERE Students.FIRST_NAME = 'Michael' AND Students.LAST_NAME = 'Hill'
+""")
+print(c.fetchall())
+c.execute("""
+SELECT FIRST_NAME, LAST_NAME, STUDENT_ID2 FROM Students 
+JOIN Enrollments ON Enrollments.STUDENT_ID = Students.STUDENT_ID2
+JOIN Courses ON Courses.COURSE_ID = Enrollments.COURSE_ID
+JOIN Teachers ON Teachers.TEACHER_ID = Courses.TEACHER_ID
+WHERE Teachers.FIRST_NAME2 = 'Karen' AND Teachers.LAST_NAME2 = 'Martin' )
 """)
 print(c.fetchall())
 #c.execute("""
