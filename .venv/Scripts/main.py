@@ -107,7 +107,7 @@ with open('teachers_with_pk.csv', 'r') as file:
 #later: add interface
 #later: add diagram explaining dev process
 #JOIN Courses ON Enrollments.COURSE_ID = ID2
-#WHERE Courses.NAME = 'Maths'
+#WHERE Courses.NAME = 'Maths' Enrollments.STUDENT_ID (SELECT DISTINCT STUDENT_ID FROM Enrollments)
 
 c.execute("""
 SELECT COURSE_NAME, STUDENT_ID, TEACHER_ID, CLASSROOM_ID FROM Courses 
@@ -117,11 +117,11 @@ WHERE Students.FIRST_NAME = 'Michael' AND Students.LAST_NAME = 'Hill'
 """)
 print(c.fetchall())
 c.execute("""
-SELECT FIRST_NAME, LAST_NAME, STUDENT_ID2 FROM Students 
+SELECT DISTINCT FIRST_NAME, LAST_NAME, STUDENT_ID2 FROM Students 
 JOIN Enrollments ON Enrollments.STUDENT_ID = Students.STUDENT_ID2
 JOIN Courses ON Courses.COURSE_ID = Enrollments.COURSE_ID
 JOIN Teachers ON Teachers.TEACHER_ID = Courses.TEACHER_ID
-WHERE Teachers.FIRST_NAME2 = 'Karen' AND Teachers.LAST_NAME2 = 'Martin' )
+WHERE Teachers.FIRST_NAME2 = 'Karen' AND Teachers.LAST_NAME2 = 'Martin' 
 """)
 print(c.fetchall())
 #c.execute("""
