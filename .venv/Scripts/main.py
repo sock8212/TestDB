@@ -69,7 +69,7 @@ CREATE TABLE Teachers (
 );
 """)
 
-
+global enterFinished
 with open('classrooms_with_pk.csv', 'r') as file:
     reader = csv.reader(file)
     # For each row in the document it will add the row to the table list
@@ -112,6 +112,7 @@ with open('teachers_with_pk.csv', 'r') as file:
 c.execute("""
 SELECT COURSE_NAME, STUDENT_ID, TEACHER_ID, CLASSROOM_ID FROM Courses 
 JOIN Enrollments ON Enrollments.COURSE_ID = Courses.COURSE_ID
+
 JOIN Students ON Students.STUDENT_ID2 = STUDENT_ID
 WHERE Students.FIRST_NAME = 'Michael' AND Students.LAST_NAME = 'Hill'
 """)
@@ -132,6 +133,22 @@ print(c.fetchall())
 #""")
 #print(c.fetchall())
 # This commits all the changes to the database.
+if __name__ == '__main__':
+    enterFinished = 0
+    while enterFinished == 0:
+        type = input("What table would you like to modify?")
+        if type in ["Student"]:
+            a = 0
+            adding = []
+            while a == 0:
+                val = input("studentID?")
+                try:
+                    inp = str(val)
+                except ValueError:
+                    adding.append(val)
+                    print("StudentID added.")
+                    a+= 1
+
 connect.commit()
 
 # This closes the connection to the database.
