@@ -143,11 +143,13 @@ if __name__ == '__main__':
             while a == 0:
                 val = input("studentID?")
                 try:
-                    inp = str(val)
+                    inp = int(val)
                 except ValueError:
-                    adding.append(val)
-                    print("StudentID added.")
-                    a+= 1
+                    print("Enter a Integer value.")
+                    break
+                adding.append(val)
+                print("StudentID added.")
+                a+= 1
 
 connect.commit()
 
