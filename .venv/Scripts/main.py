@@ -108,11 +108,11 @@ with open('teachers_with_pk.csv', 'r') as file:
 #later: add diagram explaining dev process
 #JOIN Courses ON Enrollments.COURSE_ID = ID2
 #WHERE Courses.NAME = 'Maths' Enrollments.STUDENT_ID (SELECT DISTINCT STUDENT_ID FROM Enrollments)
+# SELECT COURSE_NAME, STUDENT_ID, Courses.TEACHER_ID, CLASSROOM_ID, Teachers.FIRST_NAME2 FROM Courses, Teachers
 
 c.execute("""
-SELECT COURSE_NAME, STUDENT_ID, TEACHER_ID, CLASSROOM_ID FROM Courses 
+SELECT COURSE_NAME, STUDENT_ID, TEACHER_ID, CLASSROOM_ID FROM Courses
 JOIN Enrollments ON Enrollments.COURSE_ID = Courses.COURSE_ID
-
 JOIN Students ON Students.STUDENT_ID2 = STUDENT_ID
 WHERE Students.FIRST_NAME = 'Michael' AND Students.LAST_NAME = 'Hill'
 """)
@@ -147,9 +147,31 @@ if __name__ == '__main__':
                 except ValueError:
                     print("Enter a Integer value.")
                     break
+                c.execute("SELECT STUDENT_ID2 FROM Students")
+                #print(c.fetchall())
+                existingStudentIDs = c.fetchall()
+                print(existingStudentIDs)
+                val2 = ("'" + val + "',")
+                print (val2)
+                if val2 in existingStudentIDs:
+                    print("Enter a non-colliding Student ID")
+                    break
                 adding.append(val)
                 print("StudentID added.")
                 a+= 1
+            val = input("First Name?")
+            adding.append(val)
+            print("First Name added.")
+            val = input("Last Name?")
+            adding.append(val)
+            print("Last Name added.")
+            val = input("Date of Birth?")
+            adding.append(val)
+            print("Date of Birth added.")
+            val = input("Email?")
+            adding.append(val)
+            print("Email added.")
+
 
 connect.commit()
 
