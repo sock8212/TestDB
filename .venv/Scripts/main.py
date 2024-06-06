@@ -167,7 +167,7 @@ if __name__ == '__main__':
             adding = []
             a = 0
             while a == 0:
-                QueryPrimaryKey("StudentID?")
+                QueryStudentKey("StudentID?")
             val = input("First Name?")
             adding.append(val)
             print("First Name added.")
