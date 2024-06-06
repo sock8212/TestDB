@@ -111,9 +111,11 @@ with open('teachers_with_pk.csv', 'r') as file:
 # SELECT COURSE_NAME, STUDENT_ID, Courses.TEACHER_ID, CLASSROOM_ID, Teachers.FIRST_NAME2 FROM Courses, Teachers
 
 c.execute("""
-SELECT COURSE_NAME, STUDENT_ID, TEACHER_ID, CLASSROOM_ID FROM Courses
+SELECT Courses.COURSE_NAME, Teachers.FIRST_NAME2, Teachers.LAST_NAME2, Classrooms.BUILDING_NAME FROM Courses
 JOIN Enrollments ON Enrollments.COURSE_ID = Courses.COURSE_ID
 JOIN Students ON Students.STUDENT_ID2 = STUDENT_ID
+JOIN Classrooms ON Classrooms.CLASSROOM_ID = Courses.CLASSROOM_ID
+JOIN Teachers ON Teachers.TEACHER_ID = Courses.TEACHER_ID
 WHERE Students.FIRST_NAME = 'Michael' AND Students.LAST_NAME = 'Hill'
 """)
 print(c.fetchall())
