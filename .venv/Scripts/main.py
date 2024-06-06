@@ -133,32 +133,41 @@ print(c.fetchall())
 #""")
 #print(c.fetchall())
 # This commits all the changes to the database.
+def QueryStudentKey(statement):
+    global adding
+    global a
+    val = input(statement)
+    try:
+        inp = int(val)
+    except ValueError:
+        print("Enter a Integer value.")
+        return
+    c.execute("SELECT STUDENT_ID2 FROM Students")
+    # print(c.fetchall())
+    output = c.fetchall()
+    existingResults = []
+    for row in output:
+        existingResults.append(str(row))
+    print(existingResults)
+    val2 = ("('" + val + "',)")
+    print(val2)
+    if val2 in existingResults:
+        print("Enter a non-colliding Student ID")
+        return
+    adding.append(val)
+    print("StudentID added.")
+    a += 1
+
+
 if __name__ == '__main__':
     enterFinished = 0
     while enterFinished == 0:
         type = input("What table would you like to modify?")
         if type in ["Student"]:
-            a = 0
             adding = []
+            a = 0
             while a == 0:
-                val = input("studentID?")
-                try:
-                    inp = int(val)
-                except ValueError:
-                    print("Enter a Integer value.")
-                    break
-                c.execute("SELECT STUDENT_ID2 FROM Students")
-                #print(c.fetchall())
-                existingStudentIDs = c.fetchall()
-                print(existingStudentIDs)
-                val2 = ("'" + val + "',")
-                print (val2)
-                if val2 in existingStudentIDs:
-                    print("Enter a non-colliding Student ID")
-                    break
-                adding.append(val)
-                print("StudentID added.")
-                a+= 1
+                QueryPrimaryKey("StudentID?")
             val = input("First Name?")
             adding.append(val)
             print("First Name added.")
@@ -171,6 +180,7 @@ if __name__ == '__main__':
             val = input("Email?")
             adding.append(val)
             print("Email added.")
+            print(adding)
 
 
 connect.commit()
