@@ -155,7 +155,7 @@ def QueryStudentKey(statement):
     val2 = ("('" + val + "',)")
     print(val2)
     if val2 in existingResults:
-        print("Enter a non-colliding Student ID")
+        print("Enter a non-colliding Student ID, list of pre-existing IDs above")
         return
     adding.append(val)
     print("StudentID added.")
@@ -179,10 +179,34 @@ def QueryEnrollmentKey(statement):
     val2 = ("('" + val + "',)")
     print(val2)
     if val2 in existingResults:
-        print("Enter a non-colliding Enrollment ID")
+        print("Enter a non-colliding Enrollment ID, list of pre-existing IDs above")
         return
     adding.append(val)
     print("Enrollment ID added.")
+    a += 1
+def QueryTeacherKey(statement):
+    global adding
+    global a
+    val = input(statement)
+    try:
+        inp = int(val)
+    except ValueError:
+        print("Enter a Integer value.")
+        return
+    c.execute("SELECT TEACHER_ID FROM Teachers")
+    # print(c.fetchall())
+    output = c.fetchall()
+    existingResults = []
+    for row in output:
+        existingResults.append(str(row))
+    print(existingResults)
+    val2 = ("('" + val + "',)")
+    print(val2)
+    if val2 in existingResults:
+        print("Enter a non-colliding Teacher ID, list of pre-existing IDs above")
+        return
+    adding.append(val)
+    print("Teacher ID added.")
     a += 1
 
 if __name__ == '__main__':
@@ -194,19 +218,11 @@ if __name__ == '__main__':
             a = 0
             while a == 0:
                 QueryStudentKey("StudentID?")
-            val = input("First Name?")
-            adding.append(val)
-            print("First Name added.")
-            val = input("Last Name?")
-            adding.append(val)
-            print("Last Name added.")
-            val = input("Date of Birth?")
-            adding.append(val)
-            print("Date of Birth added.")
-            val = input("Email?")
-            adding.append(val)
-            print("Email added.")
-            print(adding)
+            for b in ["First name", "Last name", "Date of birth", "Email"]:
+                val = input(b + "?")
+                adding.append(val)
+                print(b + " added.")
+            print("You have added the following" + adding)
             c.execute(
             "INSERT INTO Students (STUDENT_ID2, FIRST_NAME, LAST_NAME, DATE_OF_BIRTH, EMAIL) VALUES (?, ?, ?, ?, ?);",
                 (adding[0], adding[1], adding[2], adding[3], adding[4]))
@@ -215,22 +231,30 @@ if __name__ == '__main__':
             a = 0
             while a == 0:
                 QueryEnrollmentKey("EnrollmentID?")
-            print("First Name added.")
-            val = input("Student ID?")
-            adding.append(val)
-            print("Student ID added.")
-            val = input("Course ID?")
-            adding.append(val)
-            print("Course ID added.")
-            val = input("Enrollment date?")
-            adding.append(val)
-            print("Enrollment date added.")
-            print(adding)
+            for b in ["Student ID", "Course ID", "Enrollment date"]:
+                val = input(b + "?")
+                adding.append(val)
+                print(b + " added.")
+            print("You have added the following" + adding)
             c.execute(
             "INSERT INTO Enrollments (ENROLLMENT_ID, STUDENT_ID, COURSE_ID, ENROLLMENT_DATE) VALUES (?, ?, ?, ?);",
                 (adding[0], adding[1], adding[2], adding[3]))
+        if type == "Add teacher":
+            adding = []
+            a = 0
+            while a == 0:
+                QueryTeacherKey("TeacherID?")
+            for b in ["First name", "Last name", "Department", "Email"]:
+                val = input(b + "?")
+                adding.append(val)
+                print(b + " added.")
+            print("You have added the following" + adding)
+            c.execute(
+                "INSERT INTO Teachers (TEACHER_ID, FIRST_NAME2, LAST_NAME2, DEPARTMENT, EMAIL) VALUES (?, ?, ?, ?, ?);",
+                (adding[0], adding[1], adding[2], adding[3], adding[4]))
 
 
+(TEACHER_ID, FIRST_NAME2, LAST_NAME2, DEPARTMENT, EMAIL)
 
 connect.commit()
 
