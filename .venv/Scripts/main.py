@@ -339,7 +339,7 @@ if __name__ == '__main__':
             """, (firstname, lastname,))
             print(c.fetchall())
         else:
-            print("Please enter one of the following: {Add student, Add student to enrollment, Add teacher, Modify Courses, Modify Classrooms, Courses by student name}")
+            print("Please enter one of the following: {Add student, Add student to enrollment, Add teacher, Modify Courses, Modify Classrooms, Courses by student name, Students by teacher name}")
 
 
 
