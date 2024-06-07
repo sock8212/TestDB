@@ -109,15 +109,16 @@ with open('teachers_with_pk.csv', 'r') as file:
 #JOIN Courses ON Enrollments.COURSE_ID = ID2
 #WHERE Courses.NAME = 'Maths' Enrollments.STUDENT_ID (SELECT DISTINCT STUDENT_ID FROM Enrollments)
 # SELECT COURSE_NAME, STUDENT_ID, Courses.TEACHER_ID, CLASSROOM_ID, Teachers.FIRST_NAME2 FROM Courses, Teachers
-
+firstname = "Michael"
+lastname = "Hill"
 c.execute("""
 SELECT Courses.COURSE_NAME, Teachers.FIRST_NAME2, Teachers.LAST_NAME2, Classrooms.BUILDING_NAME FROM Courses
 JOIN Enrollments ON Enrollments.COURSE_ID = Courses.COURSE_ID
 JOIN Students ON Students.STUDENT_ID2 = STUDENT_ID
 JOIN Classrooms ON Classrooms.CLASSROOM_ID = Courses.CLASSROOM_ID
 JOIN Teachers ON Teachers.TEACHER_ID = Courses.TEACHER_ID
-WHERE Students.FIRST_NAME = 'Michael' AND Students.LAST_NAME = 'Hill'
-""")
+WHERE Students.FIRST_NAME = ? AND Students.LAST_NAME = ?
+""", (firstname, lastname,))
 print(c.fetchall())
 c.execute("""
 SELECT DISTINCT FIRST_NAME, LAST_NAME, STUDENT_ID2 FROM Students 
@@ -159,13 +160,36 @@ def QueryStudentKey(statement):
     adding.append(val)
     print("StudentID added.")
     a += 1
-
+def QueryEnrollmentKey(statement):
+    global adding
+    global a
+    val = input(statement)
+    try:
+        inp = int(val)
+    except ValueError:
+        print("Enter a Integer value.")
+        return
+    c.execute("SELECT ENROLLMENT_ID FROM Enrollments")
+    # print(c.fetchall())
+    output = c.fetchall()
+    existingResults = []
+    for row in output:
+        existingResults.append(str(row))
+    print(existingResults)
+    val2 = ("('" + val + "',)")
+    print(val2)
+    if val2 in existingResults:
+        print("Enter a non-colliding Enrollment ID")
+        return
+    adding.append(val)
+    print("Enrollment ID added.")
+    a += 1
 
 if __name__ == '__main__':
     enterFinished = 0
     while enterFinished == 0:
-        type = input("What table would you like to modify?")
-        if type in ["Student"]:
+        type = input("What would you like to do?")
+        if type == "Add student":
             adding = []
             a = 0
             while a == 0:
@@ -183,6 +207,29 @@ if __name__ == '__main__':
             adding.append(val)
             print("Email added.")
             print(adding)
+            c.execute(
+            "INSERT INTO Students (STUDENT_ID2, FIRST_NAME, LAST_NAME, DATE_OF_BIRTH, EMAIL) VALUES (?, ?, ?, ?, ?);",
+                (adding[0], adding[1], adding[2], adding[3], adding[4]))
+        if type == "Add student to enrollment":
+            adding = []
+            a = 0
+            while a == 0:
+                QueryEnrollmentKey("EnrollmentID?")
+            print("First Name added.")
+            val = input("Student ID?")
+            adding.append(val)
+            print("Student ID added.")
+            val = input("Course ID?")
+            adding.append(val)
+            print("Course ID added.")
+            val = input("Enrollment date?")
+            adding.append(val)
+            print("Enrollment date added.")
+            print(adding)
+            c.execute(
+            "INSERT INTO Enrollments (ENROLLMENT_ID, STUDENT_ID, COURSE_ID, ENROLLMENT_DATE) VALUES (?, ?, ?, ?);",
+                (adding[0], adding[1], adding[2], adding[3]))
+
 
 
 connect.commit()
