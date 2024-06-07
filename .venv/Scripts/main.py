@@ -38,8 +38,6 @@ CREATE TABLE Courses (
 );
 """)
 
-
-
 c.execute("""
 CREATE TABLE Enrollments (
     ENROLLMENT_ID BLOB NOT NULL PRIMARY KEY,
