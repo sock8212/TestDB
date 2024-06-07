@@ -338,6 +338,8 @@ if __name__ == '__main__':
             WHERE Teachers.FIRST_NAME2 = ? AND Teachers.LAST_NAME2 = ?
             """, (firstname, lastname,))
             print(c.fetchall())
+        else:
+            print("Please enter one of the following: {Add student, Add student to enrollment, Add teacher, Modify Courses, Modify Classrooms, Courses by student name}")
 
 
 
