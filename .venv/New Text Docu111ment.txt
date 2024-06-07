@@ -1,3 +1,8 @@
 https://lucid.app/lucidchart/2fc79341-dcb0-4ca6-82ce-9ea366339e93/edit?viewport_loc=3%2C32%2C3072%2C1559%2C0_0&invitationId=inv_0b793f09-48fb-4da5-ac47-4aa32806e304
+https://github.com/sock8212/TestDB
 
-The purpose of my database
+The purpose of my database is to allow users to query and add information in a school system. It uses five sheets of pre-provided data that can be modified and queried as required. 
+There are five tables: Courses (main), Enrollments, Students, Teachers, and Classrooms. When entering information, the input for the primary key is checked with two conditions: 1) is it an integer and 2) does it collide with previous keys?. If it fails either, the relevant error message is sent and it will repeat the process. I used a blob datatype as the pre-existing data was in that format, and was unable to be converted to strings/integers, which I would have preferred. I ensured that each query worked correctly by immediately adding them to the main interface after hardcoding them in, so it could be tested against the whole dataset for errors. 
+
+Overall, everything is spelt correctly and has no grammar issues, and it returns legible data via print and can easily modify data through the relevant queries. 
+
