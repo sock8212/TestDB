@@ -256,7 +256,8 @@ if __name__ == '__main__':
                 val = input(b + "?")
                 adding.append(val)
                 print(b + " added.")
-            print("You have added the following" + adding)
+            print("You have added the following")
+            print(adding)
             c.execute(
             "INSERT INTO Students (STUDENT_ID2, FIRST_NAME, LAST_NAME, DATE_OF_BIRTH, EMAIL) VALUES (?, ?, ?, ?, ?);",
                 (adding[0], adding[1], adding[2], adding[3], adding[4]))
@@ -269,7 +270,8 @@ if __name__ == '__main__':
                 val = input(b + "?")
                 adding.append(val)
                 print(b + " added.")
-            print("You have added the following" + adding)
+            print("You have added the following")
+            print(adding)
             c.execute(
             "INSERT INTO Enrollments (ENROLLMENT_ID, STUDENT_ID, COURSE_ID, ENROLLMENT_DATE) VALUES (?, ?, ?, ?);",
                 (adding[0], adding[1], adding[2], adding[3]))
@@ -282,7 +284,8 @@ if __name__ == '__main__':
                 val = input(b + "?")
                 adding.append(val)
                 print(b + " added.")
-            print("You have added the following" + adding)
+            print("You have added the following")
+            print(adding)
             c.execute(
                 "INSERT INTO Teachers (TEACHER_ID, FIRST_NAME2, LAST_NAME2, DEPARTMENT, EMAIL) VALUES (?, ?, ?, ?, ?);",
                 (adding[0], adding[1], adding[2], adding[3], adding[4]))
@@ -295,7 +298,8 @@ if __name__ == '__main__':
                 val = input(b + "?")
                 adding.append(val)
                 print(b + " added.")
-            print("You have added the following" + adding)
+            print("You have added the following")
+            print(adding)
             c.execute(
                 "INSERT INTO Courses (COURSE_ID, COURSE_NAME, DESCRIPTION, CREDITS, CLASSROOM_ID, TEACHER_ID) VALUES (?, ?, ?, ?, ?, ?);",
                 (adding[0], adding[1], adding[2], adding[3], adding[4], adding[5]))
@@ -308,7 +312,8 @@ if __name__ == '__main__':
                 val = input(b + "?")
                 adding.append(val)
                 print(b + " added.")
-            print("You have added the following" + adding)
+            print("You have added the following")
+            print(adding)
             c.execute(
                 "INSERT INTO Classrooms (CLASSROOM_ID, ROOM_NUMBER, CAPACITY, BUILDING_NAME) VALUES (?, ?, ?, ?);",
                 (adding[0], adding[1], adding[2], adding[3]))
