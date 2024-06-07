@@ -109,25 +109,9 @@ with open('teachers_with_pk.csv', 'r') as file:
 #JOIN Courses ON Enrollments.COURSE_ID = ID2
 #WHERE Courses.NAME = 'Maths' Enrollments.STUDENT_ID (SELECT DISTINCT STUDENT_ID FROM Enrollments)
 # SELECT COURSE_NAME, STUDENT_ID, Courses.TEACHER_ID, CLASSROOM_ID, Teachers.FIRST_NAME2 FROM Courses, Teachers
-firstname = "Michael"
-lastname = "Hill"
-c.execute("""
-SELECT Courses.COURSE_NAME, Teachers.FIRST_NAME2, Teachers.LAST_NAME2, Classrooms.BUILDING_NAME FROM Courses
-JOIN Enrollments ON Enrollments.COURSE_ID = Courses.COURSE_ID
-JOIN Students ON Students.STUDENT_ID2 = STUDENT_ID
-JOIN Classrooms ON Classrooms.CLASSROOM_ID = Courses.CLASSROOM_ID
-JOIN Teachers ON Teachers.TEACHER_ID = Courses.TEACHER_ID
-WHERE Students.FIRST_NAME = ? AND Students.LAST_NAME = ?
-""", (firstname, lastname,))
-print(c.fetchall())
-c.execute("""
-SELECT DISTINCT FIRST_NAME, LAST_NAME, STUDENT_ID2 FROM Students 
-JOIN Enrollments ON Enrollments.STUDENT_ID = Students.STUDENT_ID2
-JOIN Courses ON Courses.COURSE_ID = Enrollments.COURSE_ID
-JOIN Teachers ON Teachers.TEACHER_ID = Courses.TEACHER_ID
-WHERE Teachers.FIRST_NAME2 = 'Karen' AND Teachers.LAST_NAME2 = 'Martin' 
-""")
-print(c.fetchall())
+
+
+
 #c.execute("""
 #SELECT ID2, NAME FROM Courses
 #JOIN Enrollments ON Courses.ID2 = COURSE_ID
@@ -208,6 +192,56 @@ def QueryTeacherKey(statement):
     adding.append(val)
     print("Teacher ID added.")
     a += 1
+def QueryCourseKey(statement):
+    global adding
+    global a
+    val = input(statement)
+    try:
+        inp = int(val)
+    except ValueError:
+        print("Enter a Integer value.")
+        return
+    c.execute("SELECT COURSE_ID FROM Courses")
+    # print(c.fetchall())
+    output = c.fetchall()
+    existingResults = []
+    for row in output:
+        existingResults.append(str(row))
+    print(existingResults)
+    val2 = ("('" + val + "',)")
+    print(val2)
+    if val2 in existingResults:
+        print("Enter a non-colliding Course ID, list of pre-existing IDs above")
+        return
+    adding.append(val)
+    print("Course ID added.")
+    a += 1
+
+def QueryClassroomKey(statement):
+    global adding
+    global a
+    val = input(statement)
+    try:
+        inp = int(val)
+    except ValueError:
+        print("Enter a Integer value.")
+        return
+    c.execute("SELECT CLASSROOM_ID FROM Classrooms")
+    # print(c.fetchall())
+    output = c.fetchall()
+    existingResults = []
+    for row in output:
+        existingResults.append(str(row))
+    print(existingResults)
+    val2 = ("('" + val + "',)")
+    print(val2)
+    if val2 in existingResults:
+        print("Enter a non-colliding Classroom ID, list of pre-existing IDs above")
+        return
+    adding.append(val)
+    print("Course ID added.")
+    a += 1
+
 
 if __name__ == '__main__':
     enterFinished = 0
@@ -252,9 +286,57 @@ if __name__ == '__main__':
             c.execute(
                 "INSERT INTO Teachers (TEACHER_ID, FIRST_NAME2, LAST_NAME2, DEPARTMENT, EMAIL) VALUES (?, ?, ?, ?, ?);",
                 (adding[0], adding[1], adding[2], adding[3], adding[4]))
+        if type == "Modify Courses":
+            adding = []
+            a = 0
+            while a == 0:
+                QueryCourseKey("CourseID?")
+            for b in ["Course name", "Description", "Credits", "Classroom ID", "Teacher ID"]:
+                val = input(b + "?")
+                adding.append(val)
+                print(b + " added.")
+            print("You have added the following" + adding)
+            c.execute(
+                "INSERT INTO Courses (COURSE_ID, COURSE_NAME, DESCRIPTION, CREDITS, CLASSROOM_ID, TEACHER_ID) VALUES (?, ?, ?, ?, ?, ?);",
+                (adding[0], adding[1], adding[2], adding[3], adding[4], adding[5]))
+        if type == "Modify Classrooms":
+            adding = []
+            a = 0
+            while a == 0:
+                QueryClassroomKey("ClassroomID?")
+            for b in ["Room number", "Capacity", "Building name"]:
+                val = input(b + "?")
+                adding.append(val)
+                print(b + " added.")
+            print("You have added the following" + adding)
+            c.execute(
+                "INSERT INTO Classrooms (CLASSROOM_ID, ROOM_NUMBER, CAPACITY, BUILDING_NAME) VALUES (?, ?, ?, ?);",
+                (adding[0], adding[1], adding[2], adding[3]))
+        if type == "Courses by student name":
+            firstname = input("First name?")
+            lastname = input("Last name?")
+            c.execute("""
+            SELECT Courses.COURSE_NAME, Teachers.FIRST_NAME2, Teachers.LAST_NAME2, Classrooms.BUILDING_NAME FROM Courses
+            JOIN Enrollments ON Enrollments.COURSE_ID = Courses.COURSE_ID
+            JOIN Students ON Students.STUDENT_ID2 = STUDENT_ID
+            JOIN Classrooms ON Classrooms.CLASSROOM_ID = Courses.CLASSROOM_ID
+            JOIN Teachers ON Teachers.TEACHER_ID = Courses.TEACHER_ID
+            WHERE Students.FIRST_NAME = ? AND Students.LAST_NAME = ?
+            """, (firstname, lastname,))
+            print(c.fetchall())
+        if type == "Students by teacher name":
+            firstname = input("First name?")
+            lastname = input("Last name?")
+            c.execute("""
+            SELECT DISTINCT FIRST_NAME, LAST_NAME, STUDENT_ID2 FROM Students 
+            JOIN Enrollments ON Enrollments.STUDENT_ID = Students.STUDENT_ID2
+            JOIN Courses ON Courses.COURSE_ID = Enrollments.COURSE_ID
+            JOIN Teachers ON Teachers.TEACHER_ID = Courses.TEACHER_ID
+            WHERE Teachers.FIRST_NAME2 = ? AND Teachers.LAST_NAME2 = ?
+            """, (firstname, lastname,))
+            print(c.fetchall())
 
 
-(TEACHER_ID, FIRST_NAME2, LAST_NAME2, DEPARTMENT, EMAIL)
 
 connect.commit()
 
